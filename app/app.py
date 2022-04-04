@@ -20,17 +20,17 @@ for i in range((int)(len(generate.list)/2)):
 
 # ----------------------------  Loops  ---------------------------
 
-def move(tripList):
-    while (True):
-        sleep(10)       
-        for trip in tripList:
-            trip.move()
-        print("Moved Vehicles ID:", randrange(0,100))
+# def move(tripList):
+#     while (True):
+#         sleep(10)       
+#         for trip in tripList:
+#             trip.move()
+#         print("Moved Vehicles ID:", randrange(0,100))
  
         
-t = threading.Thread(target=move, args=(tripList,))
-t.daemon = True
-t.start()
+# t = threading.Thread(target=move, args=(tripList,))
+# t.daemon = True
+# t.start()
 
 # ----------------------------  Login ----------------------------
 @app.route('/api/login/login', methods = ['POST'])
