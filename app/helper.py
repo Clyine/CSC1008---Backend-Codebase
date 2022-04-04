@@ -2,8 +2,8 @@ import requests
 import generate
 import app
 from vincenty import vincenty
-from perm import Permuation
-from classes import RouteData, matrixData
+from app.perm import Permuation
+from app.classes import RouteData, matrixData
 from app.timSort import timSort
 
 #returns latLong of given postal code (OneMap API)
