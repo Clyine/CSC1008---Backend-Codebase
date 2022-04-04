@@ -15,8 +15,8 @@ app = Flask(__name__)
 CORS(app)
 
 tripList = []
-for i in range((int)(len(generate.list)/2)):
-    tripList.append(Trip(generate.list[2*i],generate.list[2*i+1],generate.sampleroute[i]))
+# for i in range((int)(len(generate.list)/2)):
+#     tripList.append(Trip(generate.list[2*i],generate.list[2*i+1],generate.sampleroute[i]))
 
 # ----------------------------  Loops  ---------------------------
 
