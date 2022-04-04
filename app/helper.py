@@ -1,5 +1,5 @@
 import requests
-import generate
+import app.generate
 import app
 from vincenty import vincenty
 from app.perm import Permuation

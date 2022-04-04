@@ -5,9 +5,9 @@ from time import sleep
 from flask import Flask, jsonify,request
 from flask_cors import CORS
 
-from helper import getLongLat, getRoute, getMatrix
-from classes import Trip
-import generate
+from app.helper import getLongLat, getRoute, getMatrix
+from app.classes import Trip
+import app.generate
 import threading
 import gunicorn
 
