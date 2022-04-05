@@ -25,7 +25,7 @@ for i in range((int)(len(data["tripList"]))):
 del data
 
 G = Graph(79)
-file = open("app/app/DjisktraOutput.json")
+file = open("/app/app/DjisktraOutput.json")
 data = json.load(file)
 file.close()
 
