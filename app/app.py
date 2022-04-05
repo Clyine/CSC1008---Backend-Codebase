@@ -19,8 +19,8 @@ data = json.load(file)
 file.close()
 
 tripList = []
-for i in range((int)(len(data))):
-    tripList.append(Trip(data["from"],data["to"],data["route"]))
+for i in range((int)(len(data["tripList"]))):
+    tripList.append(Trip(data["tripList"][i]["from"],data["tripList"][i]["to"],data["tripList"][i]["route"]))
     
 del data
 
