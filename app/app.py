@@ -145,7 +145,7 @@ def getShortestRoute():
         route = ans.rawRoute
     )
     
-@app.route('api/routing/all', methods=['GET'])
+@app.route('/api/routing/all', methods=['GET'])
 def getAllVertex():
     return jsonify(G.routeArray)
         
