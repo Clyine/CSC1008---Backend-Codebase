@@ -1,4 +1,5 @@
 
+from crypt import methods
 import json
 from random import Random, random, randrange
 from time import sleep
@@ -144,6 +145,9 @@ def getShortestRoute():
         route = ans.rawRoute
     )
     
+@app.route('api/routing/all', methods=['GET'])
+def getAllVertex():
+    return jsonify(G.routeArray)
         
 
 # ----------------------------  User  ----------------------------
