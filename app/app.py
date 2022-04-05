@@ -108,8 +108,7 @@ def findroute():
 
 @app.route('/api/postal/test/all', methods=['GET'])
 def getAll():
-    list = generate.sampleroute
-    return jsonify(list), 201
+    return jsonify(data), 201
         
 
 # ----------------------------  User  ----------------------------
