@@ -35,7 +35,6 @@ for item in data["listing"]:
     j = item["to"]
     G.graph[i][j] = Edge(item["dist"], item["route"])
     
-del data
 for i in range(79):
     G.dijkstra(i)
 
@@ -147,7 +146,7 @@ def getShortestRoute():
     
 @app.route('/api/routing/all', methods=['GET'])
 def getAllVertex():
-    return jsonify(G.routeArray)
+    return jsonify(data)
         
 
 # ----------------------------  User  ----------------------------
