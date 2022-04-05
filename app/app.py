@@ -16,6 +16,7 @@ CORS(app)
 
 file = open("output.json")
 data = json.load(file)
+file.close()
 # for i in range((int)(len(generate.list)/2)):
 #     tripList.append(Trip(generate.list[2*i],generate.list[2*i+1],generate.sampleroute[i]))
 
