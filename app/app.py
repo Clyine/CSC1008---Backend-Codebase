@@ -4,10 +4,10 @@ from random import Random, random, randrange
 from time import sleep
 from flask import Flask, jsonify,request
 from flask_cors import CORS
+from app.graph import Graph, Edge
 
 from app.helper import getLongLat, getRoute, getMatrix
 from app.classes import Trip
-import app.generate
 import threading
 import gunicorn
 
@@ -23,6 +23,21 @@ for i in range((int)(len(data["tripList"]))):
     tripList.append(Trip(data["tripList"][i]["from"],data["tripList"][i]["to"],data["tripList"][i]["route"]))
     
 del data
+
+G = Graph(79)
+file = open("app/app/DjisktraOutput.json")
+data = json.load(file)
+file.close()
+
+for item in data["listing"]:
+    i = item["from"]
+    j = item["to"]
+    G.graph[i][j] = Edge(item["dist"], item["route"])
+    
+del data
+for i in range(79):
+    G.dijkstra(i)
+
 
 # ----------------------------  Loops  ---------------------------
 
@@ -112,7 +127,20 @@ def findroute():
 
 @app.route('/api/postal/test/all', methods=['GET'])
 def getAll():
-    return jsonify(data), 201
+    return jsonify(tripList), 201
+
+@app.route('/api/routing', methods=['POST', 'GET'])
+def getShortestRoute():
+    content = request.get_json(silent=True)
+    start = content['params']['start']
+    end = content['params']['end']
+    ans = G.getPath(start, end)
+    
+    return jsonify(
+        distance = ans.totalDistance,
+        route = ans.rawRoute
+    )
+    
         
 
 # ----------------------------  User  ----------------------------

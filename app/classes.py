@@ -21,3 +21,4 @@ class Trip:
             pass
         else:
             self.start = self.route.pop(0)
+            

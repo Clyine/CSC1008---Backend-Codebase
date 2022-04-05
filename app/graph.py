@@ -1,11 +1,18 @@
+from dis import dis
 import json
+from app.classes import RouteData
+
+class Edge:
+    def __init__(self, weights, routes):
+        self.weights = weights
+        self.routes = routes
 
 
 class Graph:
     def __init__(self, vertices):
         self.V = vertices
-        self.graph = [[0 for column in range(vertices)] for row in range(vertices)]
-        self.routeArray = [[0 for column in range(vertices)] for row in range(vertices)]
+        self.graph = [[Edge(0,0) for column in range(vertices)] for row in range(vertices)]
+        self.routeArray = [[Edge(0,0) for column in range(vertices)] for row in range(vertices)]
     
     def minDistance(self, dist, queue):
         minimum = float("Inf")
@@ -31,7 +38,7 @@ class Graph:
     def printSolution(self, src, dist, parent):
         src = src
         #print("Vertex \t\tDistance from Source\tPath")
-        for i in range(1, len(dist)):
+        for i in range(0, len(dist)):
             #print("\n%d --> %d \t\t%d \t\t\t\t\t" % (src, i, dist[i]), end=" ")
             self.printPath(parent, i)
             #print(src, i, path)
@@ -51,30 +58,18 @@ class Graph:
             u = self.minDistance(dist, queue)
             queue.remove(u)
             for i in range(col):
-                if self.graph[u][i] and i in queue:
-                    if dist[u] + self.graph[u][i] < dist[i]:
-                        dist[i] = dist[u] + self.graph[u][i]
+                if self.graph[u][i].weights and i in queue:
+                    if dist[u] + self.graph[u][i].weights < dist[i]:
+                        dist[i] = dist[u] + self.graph[u][i].weights
                         parent[i] = u
         self.printSolution(src, dist, parent)
-
-
-
-file = open("output.json")
-data = json.load(file)
-
-path = []
-
-G = Graph(79)
-
-for item in data["listing"]:
-    i = item["from"]
-    j = item["to"]
-    G.graph[i][j] = item["dist"]
-    
-# Print the solution
-
-for i in range(79):
-    G.dijkstra(i)
-#print("\n")
-
-print(G.routeArray)
+        
+    def getPath(self, start, end):
+        route = []
+        distance = 0
+        sequence = self.routeArray[start][end]
+        for i in range(len(sequence)-1):
+            distance += self.graph[sequence[i]][sequence[i+1]].weights
+            route.extend(self.graph[sequence[i]][sequence[i+1]].routes)
+            
+        return RouteData(0, distance, route)
