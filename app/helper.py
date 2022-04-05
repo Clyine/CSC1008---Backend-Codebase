@@ -1,7 +1,7 @@
 import requests
-import app.generate
-from app.app import tripList
+import app.app
 from vincenty import vincenty
+
 from app.perm import Permuation
 from app.classes import RouteData, matrixData
 from app.timSort import timSort
@@ -47,7 +47,7 @@ def getRoute(Start, Destination):
 def getMatrix(start, end):  # Matrix Service
     
     #Create deep copy of master list of trips
-    tempTripList = tripList.copy()
+    tempTripList = app.app.tripList.copy()
     #Sort list based on proximity to new pickup point
     temp = list(map(lambda x:getDistance(x,start),tempTripList))
     timSort(temp,tempTripList)
