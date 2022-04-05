@@ -13,6 +13,8 @@ class Graph:
         self.V = vertices
         self.graph = [[Edge(0,0) for column in range(vertices)] for row in range(vertices)]
         self.routeArray = [[Edge(0,0) for column in range(vertices)] for row in range(vertices)]
+        for i in range(79):
+            self.dijkstra(i)
     
     def minDistance(self, dist, queue):
         minimum = float("Inf")
