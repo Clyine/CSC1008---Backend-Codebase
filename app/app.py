@@ -34,6 +34,9 @@ for item in data["listing"]:
     i = item["from"]
     j = item["to"]
     G.graph[i][j] = Edge(item["dist"], item["route"])
+    
+for i in range(79):
+    G.dijkstra(i)
 
 # ----------------------------  Loops  ---------------------------
 
