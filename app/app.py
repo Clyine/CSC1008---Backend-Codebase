@@ -14,7 +14,7 @@ import gunicorn
 app = Flask(__name__)
 CORS(app)
 
-file = open("../output.json")
+file = open("/app/app/output.json")
 data = json.load(file)
 file.close()
 # for i in range((int)(len(generate.list)/2)):
