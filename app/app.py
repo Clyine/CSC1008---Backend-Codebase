@@ -20,7 +20,7 @@ file.close()
 
 tripList = []
 for i in range((int)(len(data))):
-    tripList.append(Trip(data["start"],data["end"],data["route"]))
+    tripList.append(Trip(data["from"],data["to"],data["route"]))
     
 del data
 
