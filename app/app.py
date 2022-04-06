@@ -134,8 +134,8 @@ def getAll():
 @app.route('/api/routing/test', methods=['POST', 'GET'])
 def getShortestRoute():
     content = request.get_json(silent=True)
-    start = int(content['params']['start'])
-    end = int(content['params']['end'])
+    start = int(content['params']['start'])-1
+    end = int(content['params']['end'])-1
     ans = G.getPath(start, end)
     
     return jsonify(
