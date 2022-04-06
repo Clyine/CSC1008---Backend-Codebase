@@ -131,7 +131,7 @@ def getAll():
         mylist.append(item.route)
     return jsonify(mylist), 201
 
-@app.route('/api/routing', methods=['POST', 'GET'])
+@app.route('/api/routing/test', methods=['POST', 'GET'])
 def getShortestRoute():
     content = request.get_json(silent=True)
     start = content['params']['start']
