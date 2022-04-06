@@ -1,5 +1,5 @@
 import json
-from classes import RouteData
+from app.classes import RouteData
 
 path = []
 
