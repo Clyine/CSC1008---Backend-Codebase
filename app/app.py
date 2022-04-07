@@ -120,8 +120,8 @@ def findroute():
     startLatLong = [start[1],start[0]]
     endLatLong =[end[1], end[0]] 
     taxiPoint = [route[0][0][1],route[0][0][0]]
-    taxiRouteResponse = getRoute(taxiPoint,start)
-    taxiDist = taxiRouteResponse.totalDistance/1000
+    #taxiRouteResponse = getRoute(taxiPoint,start)
+    taxiDist = dist #taxiRouteResponse.totalDistance
     
     #returns geodata to web app via HTTP
     return jsonify(

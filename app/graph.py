@@ -7,7 +7,7 @@ class Edge:
     def __init__(self, weights, routes):
         self.weights = weights
         self.routes = routes
-
+    
 
 class Graph:
     def __init__(self, vertices):
