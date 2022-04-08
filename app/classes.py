@@ -15,10 +15,4 @@ class Trip:
         self.start = start
         self.end = end
         self.route = route
-        
-    def move(self):
-        if self.start == self.route[-1] or len(self.route) == 1:
-            pass
-        else:
-            self.start = self.route.pop(0)
             

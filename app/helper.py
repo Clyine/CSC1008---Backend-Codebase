@@ -84,7 +84,7 @@ def getMatrix(start, end):  # Matrix Service
     #Get API response
     arrayMatrix = api_response["distances"]
     
-    #Set trips in the list. (Currently hardcoded as a total of 11 trips, inclusive of new trips. Can be changed in line 63 up to a max of 58 (29 Trips))
+    #Set trips in the list. (Currently hardcoded as a total of 21 trips, inclusive of new trips. Can be changed in line 63 up to a max of 58 (29 Trips))
     size = (int)(len(compList)/2)
     
     #Create Permuation of "m" trips. where m = size - 1.

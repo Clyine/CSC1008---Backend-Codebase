@@ -1,6 +1,11 @@
 import sys
 
 #NEW ROUTE TO BE AT INDEX 0,1 REST OF THE ROUTES IN INDEX 2 AND BEYOND. EVEN INDEX = START, ODD INDEX = DESTINATION
+#The rest of the trips are grouped into pairs
+#The k-th even and odd number are part of the same trip
+#i.e. index 4 and 5 are the start and end location for the same trip.
+#i.e. index 22 and 23 are the start and end location for the same trip.
+#This allows us to properly form our valid sequences and to compute the total distance from our distance matrix.
 
 
 class Permuation():
@@ -33,6 +38,7 @@ class Permuation():
         #For each permutation set, generate all logical sequence of points
         for i in range(len(set)-1):
             set = self.perms[i]
+            #3 possible sequence as number of passengers == 2
             self.sequence.append([set[1][0],set[0][0],set[1][1],set[0][1]])
             self.sequence.append([set[1][0],set[0][0],set[0][1],set[1][1]])
             self.sequence.append([set[1][0],set[1][1],set[0][0],set[0][1]])

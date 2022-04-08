@@ -1,20 +1,23 @@
 
-from crypt import methods
 import json
-from random import Random, random, randrange
-from time import sleep
 from flask import Flask, jsonify,request
 from flask_cors import CORS
 from app.graph import Graph, Edge
 
 from app.helper import getLongLat, getRoute, getMatrix
 from app.classes import Trip
-import threading
-import gunicorn
 
+#This is the backend code powered by flask for our CSC1008 project.
+#The code is currently built and run on heroku at "https://csc1008-ride-testing-app.herokuapp.com/"
+#Our frontend codebase currently performs HTTP request at "https://csc1008-ride-testing-app.herokuapp.com/"
+
+#initialise flask server object
 app = Flask(__name__)
 CORS(app)
 
+#Opens output.json, which contains details on our precomputed trips.
+#The data is loaded and converted into a List of "Trip" objects.
+#Each "Trip" Object contains the Start and End Coordinates as well as the polyline route data it's currently on
 file = open("/app/app/output.json")
 data = json.load(file)
 file.close()
@@ -25,6 +28,9 @@ for i in range((int)(len(data["tripList"]))):
     
 del data
 
+#Opens DjisktraOutput.json, which contains details on our defined vertex, edgelist
+#A graph of size 79 is initialised as we have defined only 79 vertices.
+#Data from our egdelist is converted into Edge Objects and inserted into our graph, forming a adjacency matrix
 G = Graph(79)
 file = open("/app/app/DjisktraOutput.json")
 data = json.load(file)
@@ -35,23 +41,16 @@ for item in data["listing"]:
     j = item["to"]
     G.graph[i][j] = Edge(item["dist"], item["route"])
     
+#Djisktra algorithm is run to find the shorted path from source node "i" to all other node in graph.
+#Results is stored in G.routeArray
 for i in range(79):
     G.dijkstra(i)
 
-# ----------------------------  Loops  ---------------------------
 
-# def move(tripList):
-#     while (True):
-#         sleep(10)       
-#         for trip in tripList:
-#             trip.move()
-#         print("Moved Vehicles ID:", randrange(0,100))
- 
-        
-# t = threading.Thread(target=move, args=(tripList,))
-# t.daemon = True
-# t.start()
-
+#Simple user authentication methods.
+#Currently one 1 account
+#Username = Cat
+#Password = 123
 # ----------------------------  Login ----------------------------
 @app.route('/api/login/login', methods = ['POST'])
 def login():
@@ -85,9 +84,12 @@ def logout():
     return jsonify(), 201
 
 # ----------------------------  API control ----------------------------
+#Get best shared route if possible given a start postal code and end postal code
 @app.route('/api/postal', methods=['POST', 'GET'])
 def findroute():
     content = request.get_json(silent=True)
+    
+    #Converts postal code to LatLong coordinates using OneMap API
     start = getLongLat(content['params']['pickup']) 
     end = getLongLat(content['params']['destination'])
     
@@ -119,8 +121,6 @@ def findroute():
     
     startLatLong = [start[1],start[0]]
     endLatLong =[end[1], end[0]] 
-    taxiPoint = [route[0][0][1],route[0][0][0]]
-    #taxiRouteResponse = getRoute(taxiPoint,start)
     taxiDist = dist #taxiRouteResponse.totalDistance
     
     #returns geodata to web app via HTTP
@@ -133,6 +133,7 @@ def findroute():
         comproute=compList), 201
 
 
+#Returns all precomputed trips for simulation purposes for plotting onto map
 @app.route('/api/postal/test/all', methods=['GET'])
 def getAll():
     mylist = []
@@ -140,6 +141,7 @@ def getAll():
         mylist.append(item.route)
     return jsonify(mylist), 201
 
+#Return route generated from our djisktra implementation
 @app.route('/api/routing/test', methods=['POST', 'GET'])
 def getShortestRoute():
     content = request.get_json(silent=True)
@@ -152,6 +154,7 @@ def getShortestRoute():
         route = ans.rawRoute
     )
     
+#Returns all information on our Graph for plotting into the map
 @app.route('/api/routing/all', methods=['GET'])
 def getAllVertex():
     return jsonify(data)

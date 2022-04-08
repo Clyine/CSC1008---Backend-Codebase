@@ -3,6 +3,8 @@ from app.classes import RouteData
 
 path = []
 
+
+#Defined edge object
 class Edge:
     def __init__(self, weights, routes):
         self.weights = weights
@@ -12,13 +14,10 @@ class Edge:
 class Graph:
     def __init__(self, vertices):
         self.V = vertices
-        
         self.graph = [
-            [Edge(0, 0) for column in range(vertices)] for row in range(vertices)
-        ]
+            [Edge(0, 0) for column in range(vertices)] for row in range(vertices)]
         self.routeArray = [
-            [0 for column in range(vertices)] for row in range(vertices)
-        ]
+            [0 for column in range(vertices)] for row in range(vertices)]
 
     def minDistance(self, dist, queue):
         minimum = float("Inf")
@@ -34,22 +33,17 @@ class Graph:
     # Function to print and initlise array to store the shortest path from source to j using parent array
     def printPath(self, parent, j):
         if parent[j] == -1:
-            # print(j, end=" ")
             path.clear()
             path.append(j)
             return
         self.printPath(parent, parent[j])
-        # print(j, end=" ")
         path.append(j)
 
     # Print the constructed distance array
     def printSolution(self, src, dist, parent):
         src = src
-        # print("Vertex \t\tDistance from Source\tPath")
         for i in range(0, len(dist)):
-            # print("\n%d --> %d \t\t%d \t\t\t\t\t" % (src, i, dist[i]), end=" ")
             self.printPath(parent, i)
-            # print(src, i, path)
             self.routeArray[src][i] = path.copy()
             path.clear()
 
@@ -68,7 +62,8 @@ class Graph:
         queue = []
         for i in range(row):
             queue.append(i)
-            # Find shortest path for all vertices
+        
+        # Find shortest path for all vertices
         while queue:
             # Pick the minimum dist vertex from the set of vertices still in queue
             u = self.minDistance(dist, queue)
@@ -83,6 +78,7 @@ class Graph:
                     if dist[u] + self.graph[u][i].weights < dist[i]:
                         dist[i] = dist[u] + self.graph[u][i].weights
                         parent[i] = u
+                        
         self.printSolution(src, dist, parent)
 
     #Get path sequence from referenced start to end. Compute the poly line for the shortest route and returns the computed value
